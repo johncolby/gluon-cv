@@ -76,6 +76,7 @@ class FocalLoss(gluon.loss.Loss):
             pred = F.sigmoid(pred)
         if self._sparse_label:
             one_hot = F.one_hot(label, self._num_class)
+            one_hot = _reshape_like(F, one_hot, pred)
         else:
             one_hot = label > 0
         pt = F.where(one_hot, pred, 1 - pred)
